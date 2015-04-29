@@ -1,0 +1,10 @@
+.*
+workspace
+target
+bin
+build-number.txt
+mockserver*.log
+keystore.jks
+*.iml
+*.orig
+**/src/**/java/META-INF/MANIFEST.MF
