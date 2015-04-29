@@ -7,7 +7,7 @@
             "path": "/",
             "type": "raml",
             "fileName": "ratingreviews.raml",
-            "packageName": "de.hybris.hackathon.reviewsratings.api.generated",
+            "packageName": "de.hybris.hackathon.ratingreviews.api.generated",
             "async": false
         }
     ]
