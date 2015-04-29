@@ -10,6 +10,6 @@
  * license agreement you entered into with hybris.
  */
 /**
- * Contains the application config.
+ * Soon javadoc will get generated here proper.
  */
-package de.hybris.hackathon;
+package de.hybris.hackathon.reviewsratings.api.generated;
