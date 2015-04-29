@@ -12,4 +12,4 @@
 /**
  * Soon javadoc will get generated here proper.
  */
-package de.hybris.hackathon.reviewsratings.api.generated;
+package de.hybris.hackathon.ratingreviews.api.generated;
