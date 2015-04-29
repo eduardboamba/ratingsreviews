@@ -5,56 +5,58 @@ version: v1
 mediaType:  application/json
 
 schemas:
-  - wishlists: !include wishlists.json
-  - wishlist: !include wishlist.json
-  - wishlistItem: !include wishlistItem.json
+  - reviews: !include reviews.json
+  - review: !include review.json
   - error: !include https://api.yaas.io/patterns/v1/schema-error-message.json
   - localized: !include https://api.yaas.io/patterns/v1/schema-localized.json
 
-traits: 
+traits:
   - !include https://api.yaas.io/patterns/v1/trait-yaas-aware.yaml
 
 resourceTypes: 
   - !include https://api.yaas.io/patterns/v1/resource-type-element.yaml
   - !include https://api.yaas.io/patterns/v1/resource-type-collection.yaml
 
-/wishlists:
+/{tenant}/reviews: 
   type: collection
   is: [yaasAware]
+  uriParameters: 
+    tenant: 
+      displayName: tenant
+      type: string
+      required: true
+      repeat: false
   get:
-    description: Gets all wishlists
+    description: Gets all reviews
     responses:
       200:
         body:
           application/json:
-            example: !include wishlists-example.json
+            example: !include reviews-example.json
   post:
-    description: Creates a new wishlist
+    description: Creates a new review
     body:
       application/json:
-        example: !include wishlist-example.json
-
-  /{wishlistId}:
+        example: !include review-example.json
+  /{reviewId}:
     type: element
     is: [yaasAware]
     uriParameters:
-      wishlistId:
-        description: the id of the wishlist to work on
+      reviewId:
+        description: the unique id of the review
         example: 784hti8ey
         type: string
     get:
-      description: Gets a wishlist
+      description: Gets a review
       responses:
         200:
           body:
             application/json:
-              example: !include wishlist-example.json
-
+              example: !include review-example.json
     put:
-      description: Updates a wishlist
+      description: Updates a review
       body:
         application/json:
-          example: !include wishlist-example.json
-
+          example: !include review-example.json
     delete:
-      description: Deletes a wishlist
+      description: Deletes a review

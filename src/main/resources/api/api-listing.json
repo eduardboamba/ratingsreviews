@@ -1,5 +1,5 @@
 {
-    "name": "hybris Service",
+    "name": "hybris Reviews & Ratings Service",
     "references":[
         {
             "namespace": "api",
@@ -7,7 +7,7 @@
             "path": "/",
             "type": "raml",
             "fileName": "ratingreviews.raml",
-            "packageName": "de.hybris.hackathon.api.generated",
+            "packageName": "de.hybris.hackathon.reviewsratings.api.generated",
             "async": false
         }
     ]
