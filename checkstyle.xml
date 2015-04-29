@@ -286,8 +286,6 @@
             <property name="severity" value="info"/>
         </module>
 
-        <module name="UncommentedMain"/>
-
         <module name="UpperEll"/>
 
         <module name="ArrayTypeStyle"/>
