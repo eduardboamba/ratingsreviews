@@ -1,0 +1,22 @@
+%YAML 1.1
+# This file is a Cloud Foundry application manifest.
+# Use it to deploy your ratingreviews service to the YaaS prod environment (monsoon).
+# To do so with the Cloud Foundry CLI-tool, execute the following command in this directory:
+#
+#     cf push -f cf-manifest-prod.yml
+#
+# For more infromation see:
+# https://devportal.yaas.io/gettingstarted/deploytocloudfoundry/index.html
+# http://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html
+---
+applications:
+- name: ratingreviews
+  buildpack: https://github.com/hybris/java-buildpack.git
+  instances: 1
+  memory: 1024M
+  host: ratingreviews
+  domain: prod.cf.hybris.com
+  path: target/ratingreviews.war
+  env:
+    ENV_NAME: hybris_prod
+    TEAM_NAME: bananas

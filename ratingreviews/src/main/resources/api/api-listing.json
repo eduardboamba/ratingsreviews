@@ -1,0 +1,14 @@
+{
+    "name": "hybris Service",
+    "references":[
+        {
+            "namespace": "api",
+            "description": "API definition of ratingreviews",
+            "path": "/",
+            "type": "raml",
+            "fileName": "ratingreviews.raml",
+            "packageName": "de.hybris.hackathon.api.generated",
+            "async": false
+        }
+    ]
+}
