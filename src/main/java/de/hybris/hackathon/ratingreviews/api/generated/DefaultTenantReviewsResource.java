@@ -19,6 +19,7 @@ import com.hybris.patterns.schemas.ResourceLocation;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -60,11 +61,16 @@ public class DefaultTenantReviewsResource implements TenantReviewsResource
 				.execute();
 		if (response.getStatus() == Response.Status.OK.getStatusCode())
 		{
-			// final ArrayList<Review> reviews = new ArrayList<Review>();
+			final ArrayList<Review> reviews = new ArrayList<Review>();
 			// final Review review = readReview(response);
 			// reviews.add(review);
 			// return Response.ok(reviews).build();
-			return response;
+			final ArrayList entities = response.readEntity(ArrayList.class);
+			for (final Object e : entities)
+			{
+				reviews.add(readReview((Map<String, Object>) e));
+			}
+			return Response.ok(reviews).build();
 		}
 		throw new InternalServerErrorException();
 	}
@@ -96,7 +102,7 @@ public class DefaultTenantReviewsResource implements TenantReviewsResource
 				.execute();
 		if (response.getStatus() == Response.Status.OK.getStatusCode())
 		{
-			final Review review = readReview(response);
+			final Review review = readReview(response.readEntity(Map.class));
 			return Response.ok(review).build();
 		}
 		throw new InternalServerErrorException();
@@ -166,9 +172,8 @@ public class DefaultTenantReviewsResource implements TenantReviewsResource
 										true)));
 	}
 
-	private Review readReview(final Response response)
+	private Review readReview(final Map<String, Object> repoDocument)
 	{
-		final Map<String, Object> repoDocument = response.readEntity(Map.class);
 		final Review review = new Review();
 		review.setComment((String) repoDocument.get("comment"));
 		review.setCreatedAt(new Date((Long) repoDocument.get("createdAt")));
