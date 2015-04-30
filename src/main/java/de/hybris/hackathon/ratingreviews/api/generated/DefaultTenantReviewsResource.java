@@ -62,9 +62,6 @@ public class DefaultTenantReviewsResource implements TenantReviewsResource
 		if (response.getStatus() == Response.Status.OK.getStatusCode())
 		{
 			final ArrayList<Review> reviews = new ArrayList<Review>();
-			// final Review review = readReview(response);
-			// reviews.add(review);
-			// return Response.ok(reviews).build();
 			final ArrayList entities = response.readEntity(ArrayList.class);
 			for (final Object e : entities)
 			{
@@ -182,6 +179,7 @@ public class DefaultTenantReviewsResource implements TenantReviewsResource
 		review.setRating((Integer) repoDocument.get("rating"));
 		review.setReviewer((String) repoDocument.get("reviewer"));
 		review.setTitle((String) repoDocument.get("title"));
+		review.setApproved((Boolean) repoDocument.get("approved"));
 		try
 		{
 			review.setUrl(new URI((String) repoDocument.get("url")));

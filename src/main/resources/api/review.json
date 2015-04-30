@@ -43,6 +43,10 @@
       "type":"integer",
       "minimum":1,
       "maximum":5
+    },
+    "approved":
+    {
+      "type":"boolean"
     }
   },
   "required":["id","createdAt","reviewer","product"]
