@@ -17,6 +17,10 @@ import de.hybris.hackathon.ratingreviews.api.generated.oauth.OAuth2Authorization
 
 import com.hybris.patterns.schemas.ResourceLocation;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Date;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.inject.Singleton;
@@ -56,12 +60,9 @@ public class DefaultTenantReviewsResource implements TenantReviewsResource
 				.execute();
 		if (response.getStatus() == Response.Status.OK.getStatusCode())
 		{
-			// final Map<String, Object> repoDocument = response.readEntity(Map.class);
-			// final Review review = new Review();
-			// review.setComment(repoDocument.get(""));
-			// final GenericType<ArrayList<Review>> reviewListType = new GenericType<ArrayList<Review>>()
-			// {};
-			// final ArrayList<Review> reviews = response.readEntity(reviewListType);
+			// final ArrayList<Review> reviews = new ArrayList<Review>();
+			// final Review review = readReview(response);
+			// reviews.add(review);
 			// return Response.ok(reviews).build();
 			return response;
 		}
@@ -72,7 +73,6 @@ public class DefaultTenantReviewsResource implements TenantReviewsResource
 	@Override
 	public Response post(final YaasAwareParameters yaasAware, final java.lang.String tenant, final Review review)
 	{
-		// place some logic here
 		final DocumentRepositoryClient client = getDocumentRepositoryClient();
 		final Response response = client.tenant(tenant).clientData(CLIENT).type("reviews")
 				.preparePost().withAuthorization(getOAuthAccessToken(yaasAware.getHybrisTenant()))
@@ -96,7 +96,7 @@ public class DefaultTenantReviewsResource implements TenantReviewsResource
 				.execute();
 		if (response.getStatus() == Response.Status.OK.getStatusCode())
 		{
-			final Review review = response.readEntity(Review.class);
+			final Review review = readReview(response);
 			return Response.ok(review).build();
 		}
 		throw new InternalServerErrorException();
@@ -112,13 +112,11 @@ public class DefaultTenantReviewsResource implements TenantReviewsResource
 		final Response response = client.tenant(tenant).clientData(CLIENT).type("reviews").dataId(reviewId)
 				.preparePut().withAuthorization(getOAuthAccessToken(yaasAware.getHybrisTenant()))
 				.withPayload(Entity.json(review)).execute();
-		// if (response.getStatus() == Response.Status.OK.getStatusCode())
-		// {
-		// final ResourceLocation location = response.readEntity(ResourceLocation.class);
-		// return Response.created(location.getLink()).build();
-		// }
-		// throw new InternalServerErrorException();
-		return response;
+		if (response.getStatus() == Response.Status.OK.getStatusCode())
+		{
+			return Response.ok().build();
+		}
+		throw new InternalServerErrorException();
 	}
 
 	/* DELETE /{reviewId} */
@@ -133,7 +131,6 @@ public class DefaultTenantReviewsResource implements TenantReviewsResource
 
 		if (response.getStatus() == Response.Status.NO_CONTENT.getStatusCode())
 		{
-
 			return Response.noContent().build();
 		}
 		throw new InternalServerErrorException();
@@ -171,6 +168,23 @@ public class DefaultTenantReviewsResource implements TenantReviewsResource
 
 	private Review readReview(final Response response)
 	{
-		return null;
+		final Map<String, Object> repoDocument = response.readEntity(Map.class);
+		final Review review = new Review();
+		review.setComment((String) repoDocument.get("comment"));
+		review.setCreatedAt(new Date((Long) repoDocument.get("createdAt")));
+		review.setId((String) repoDocument.get("id"));
+		review.setProduct((String) repoDocument.get("product"));
+		review.setRating((Integer) repoDocument.get("rating"));
+		review.setReviewer((String) repoDocument.get("reviewer"));
+		review.setTitle((String) repoDocument.get("title"));
+		try
+		{
+			review.setUrl(new URI((String) repoDocument.get("url")));
+		}
+		catch (final URISyntaxException e)
+		{
+			throw new RuntimeException(e);
+		}
+		return review;
 	}
 }
