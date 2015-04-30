@@ -14,8 +14,8 @@ applications:
   buildpack: https://github.com/hybris/java-buildpack.git
   instances: 1
   memory: 1024M
-  host: ratingreviews
-  domain: prod.cf.hybris.com
+  host: ratings-reviews-v1
+  domain: cf3.hybris.com
   path: target/ratingreviews.war
   env:
     ENV_NAME: hybris_prod
